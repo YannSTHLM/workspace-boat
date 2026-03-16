@@ -64,7 +64,7 @@ CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
 CREATE INDEX "RouteStop_savedRouteId_idx" ON "RouteStop"("savedRouteId");
 
 -- CreateIndex
-CREATE "BoatAdvert_locationId_idx" ON "BoatAdvert"("locationId");
+CREATE INDEX "BoatAdvert_locationId_idx" ON "BoatAdvert"("locationId");
 
 -- AddForeignKey
 ALTER TABLE "RouteStop" ADD CONSTRAINT "RouteStop_locationId_fkey" FOREIGN KEY ("locationId") REFERENCES "Location"("id") ON DELETE CASCADE ON UPDATE CASCADE;
