@@ -1,0 +1,74 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Location {
+  id          Int       @id @default(autoincrement())
+  name        String
+  lat         Float
+  lng         Float
+  description String
+  country     String
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  
+  // Relations
+  routeStops     RouteStop[]
+  boatAdverts    BoatAdvert[]
+}
+
+model SavedRoute {
+  id        Int       @id @default(autoincrement())
+  name      String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  
+  // Relations
+  stops     RouteStop[]
+}
+
+model RouteStop {
+  id           Int       @id @default(autoincrement())
+  order        Int       // Order within the route
+  locationId   Int
+  savedRouteId Int?
+  createdAt    DateTime  @default(now())
+  
+  // Relations
+  location     Location  @relation(fields: [locationId], references: [id], onDelete: Cascade)
+  savedRoute   SavedRoute? @relation(fields: [savedRouteId], references: [id], onDelete: Cascade)
+  
+  @@index([savedRouteId])
+}
+
+model BoatAdvert {
+  id          Int      @id @default(autoincrement())
+  url         String
+  title       String
+  locationId  Int
+  notes       String   @default("")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  // Relations
+  location    Location @relation(fields: [locationId], references: [id], onDelete: Cascade)
+  
+  @@index([locationId])
+}
+
+// Keep existing models for reference (can be removed if not needed)
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
