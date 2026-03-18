@@ -1278,7 +1278,16 @@ export default function Home() {
                               ID:{advert.locationId} - {location?.name || 'Unknown'}
                             </Badge>
                           </td>
-                          <td className="py-2 px-2 text-gray-500 truncate max-w-[150px]">{advert.notes || '-'}</td>
+                          <td className="py-2 px-2 text-gray-500 max-w-[150px]">
+                            <div className="relative group">
+                              <span className="block truncate">{advert.notes || '-'}</span>
+                              {advert.notes && (
+                                <div className="absolute left-0 top-full z-10 mt-1 hidden w-64 rounded-md border border-gray-200 bg-white p-2 text-xs text-gray-700 shadow-lg group-hover:block">
+                                  {advert.notes}
+                                </div>
+                              )}
+                            </div>
+                          </td>
                           <td className="py-2 px-2 text-gray-400 text-xs">
                             {new Date(advert.createdAt).toLocaleDateString()}
                           </td>
