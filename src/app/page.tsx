@@ -8,7 +8,7 @@ import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { Trash2, Plus, MapPin, Route, ArrowRight, X, Navigation, Pencil, Check, Link, Download, ExternalLink, Save, FolderOpen, Bookmark, Upload, Loader2 } from 'lucide-react'
+import { Trash2, Plus, MapPin, Sailboat, Route, ArrowRight, X, Navigation, Pencil, Check, Link, Download, ExternalLink, Save, FolderOpen, Bookmark, Upload, Loader2 } from 'lucide-react'
 import {
   AlertDialog,
   AlertDialogAction,
@@ -719,9 +719,9 @@ export default function Home() {
       <header className="bg-white shadow-sm border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 py-4 sm:px-6 lg:px-8">
           <div className="flex items-center gap-3">
-            <MapPin className="h-8 w-8 text-red-500" />
+            <Sailboat className="h-8 w-8 text-red-500" />
             <div>
-              <h1 className="text-2xl font-bold text-gray-900">Yacht Locations Map</h1>
+              <h1 className="text-2xl font-bold text-gray-900">Boat Map</h1>
               <p className="text-sm text-gray-500">Interactive map with roadtrip planner (persistent)</p>
             </div>
           </div>
@@ -1278,7 +1278,16 @@ export default function Home() {
                               ID:{advert.locationId} - {location?.name || 'Unknown'}
                             </Badge>
                           </td>
-                          <td className="py-2 px-2 text-gray-500 truncate max-w-[150px]">{advert.notes || '-'}</td>
+                          <td className="py-2 px-2 text-gray-500 max-w-[150px]">
+                            <div className="relative group">
+                              <span className="block truncate">{advert.notes || '-'}</span>
+                              {advert.notes && (
+                                <div className="absolute left-0 top-full z-10 mt-1 hidden w-64 rounded-md border border-gray-200 bg-white p-2 text-xs text-gray-700 shadow-lg group-hover:block">
+                                  {advert.notes}
+                                </div>
+                              )}
+                            </div>
+                          </td>
                           <td className="py-2 px-2 text-gray-400 text-xs">
                             {new Date(advert.createdAt).toLocaleDateString()}
                           </td>
